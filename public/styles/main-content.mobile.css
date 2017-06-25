@@ -1,0 +1,52 @@
+/* Main Content */
+
+div.main-content {
+    position: relative;
+    display: block;
+    transition: left 0.3s ease-out;
+    left: 0px;
+}
+
+div.nav-bar.open+div.main-content {
+    left: calc(100% - 72px);
+}
+
+
+/* Content Title */
+
+div.main-content div.content-title {
+    position: relative;
+}
+
+
+/* Banner */
+
+div.main-content div.banner img {
+    display: block;
+    height: 240px;
+    width: 100%;
+}
+
+
+/* Title */
+
+div.main-content div.title {
+    margin: 50px 0px;
+    padding: 0px 10px;
+}
+
+div.main-content div.title h1 {
+    margin: 0px;
+    font: 44px/48px HUGEAvantGardeBold;
+    color: black;
+    text-align: center;
+}
+
+
+/* Content Text */
+
+div.main-content div.content-text {
+    padding: 0px 10px;
+    text-align: justify;
+    font: 14px/24px Galaxie;
+}

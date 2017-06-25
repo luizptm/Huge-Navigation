@@ -1,0 +1,43 @@
+{
+    "name": "NavExercise",
+    "description": "Exercise for candidates to complete where they will build a responsive nav driven from json",
+    "version": "0.1.0",
+    "authors": [
+        "Luiz Paulo <toniazzom@gmail.com"
+    ],
+    "license": "© 2016 Huge. All Rights Reserved.",
+    "homepage": "https://github.com/hugeinc/NavExercise",
+    "bugs": {
+        "url": "https://github.com/hugeinc/NavExercise/issues"
+    },
+    "private": true,
+    "scripts": {
+        "test": "grunt karma",
+        "start": "node ./bin/www"
+    },
+    "dependencies": {
+        "express": "~4.2.0",
+        "morgan": "~1.0.0"
+    },
+    "devDependencies": {
+        "chai": "^3.5.0",
+        "express": "~4.2.0",
+        "grunt": "gruntjs/grunt",
+        "grunt-contrib-uglify": "gruntjs/grunt-contrib-uglify",
+        "grunt-contrib-jshint": "gruntjs/grunt-contrib-jshint",
+        "grunt-contrib-qunit": "gruntjs/grunt-contrib-qunit",
+        "grunt-contrib-watch": "gruntjs/grunt-contrib-watch",
+        "grunt-contrib-concat": "gruntjs/grunt-contrib-concat",
+        "grunt-jsdoc": "krampstudio/grunt-jsdoc",
+        "grunt-karma": "karma-runner/grunt-karma",
+        "karma": "karma-runner/karma",
+        "karma-chai": "xdissent/karma-chai",
+        "karma-mocha": "karma-runner/karma-mocha",
+        "karma-phantomjs-launcher": "karma-runner/karma-phantomjs-launcher",
+        "karma-sinon": "kmees/karma-sinon-chai",
+        "mocha": "^2.4.5",
+        "morgan": "~1.0.0",
+        "sinon": "sinonjs/sinon",
+        "sinon-chai": "domenic/sinon-chai"
+    }
+}

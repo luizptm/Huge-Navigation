@@ -1,0 +1,105 @@
+@media all and (min-width: 768px) {
+    /* NavBar */
+    div.nav-bar {
+        position: relative;
+        width: 100%;
+        background-color: #ec008c;
+        z-index: 3;
+        height: 72px;
+        left: 0px;
+        top: 0px;
+        overflow: hidden;
+    }
+    div.nav-bar ul.nav {
+        margin: 0px;
+        padding: 0px;
+        height: 72px;
+    }
+    /* Copyrigth */
+    div.nav-bar p.copyright {
+        display: none;
+    }
+    /* logo */
+    div.nav-bar a.logo {
+        margin: 24px 48px 24px 24px;
+        float: left;
+        position: relative;
+        top: 0px;
+        display: block;
+        width: 60px;
+        height: 24px;
+    }
+    div.nav-bar a.logo img {
+        height: 24px;
+        width: 60px;
+    }
+    /* Items */
+    div.nav-bar ul.nav li.nav-item {
+        margin: 0px;
+        list-style-type: none;
+        height: 72px;
+        float: left
+    }
+    /* Item Anchor */
+    ul.nav li.nav-item a {
+        height: 72px;
+        text-decoration: none;
+        display: block;
+        padding: 12px 0px;
+        float: left;
+    }
+    ul.nav li.nav-item.open a,
+    ul.nav li.nav-item a:hover {
+        background-color: white;
+    }
+    /* Item Text */
+    ul.nav li.nav-item a span.nav-item-text:active,
+    ul.nav li.nav-item a span.nav-item-text {
+        color: white;
+        padding: 0px 24px;
+    }
+    ul.nav li.nav-item.open a span.nav-item-text,
+    ul.nav li.nav-item a:hover span.nav-item-text {
+        color: #ec008c;
+    }
+    /* Item Icon */
+    span.nav-item-icon,
+    span.nav-item-icon:after {
+        display: none;
+    }
+    /*Sub Nav*/
+    ul.nav li.nav-item.open ul.nav {
+        position: fixed;
+        top: 72px;
+        display: block;
+        background-color: white;
+        margin: 0px;
+        cursor: pointer;
+    }
+    /* Sub Items */
+    ul.nav li.nav-item ul.nav li.nav-item {
+        height: 48px;
+        float: none;
+        padding: 0px;
+    }
+    /* Sub Items Anchor*/
+    li.nav-item ul.nav li.nav-item a {
+        width: 100%;
+        display: block;
+        height: 48px;
+        padding: 0px;
+    }
+    li.nav-item ul.nav li.nav-item a:hover {
+        background-color: #eee
+    }
+    /* Sub Items Text*/
+    li.nav-item ul.nav li.nav-item span.nav-item-text {
+        font: 16px/48px Galaxie;
+        color: black;
+        margin: 0px;
+        cursor: pointer;
+    }
+    li.nav-item ul.nav li.nav-item a:hover span.nav-item-text {
+        color: #ec008c;
+    }
+}

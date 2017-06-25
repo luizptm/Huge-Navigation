@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>(function() {
+    var logo = document.getElementsByClassName('logo')[0];
+    var toogleButton = document.getElementsByClassName('toogle')[0];
+    var navbar = document.getElementsByClassName("nav-bar")[0];
+
+    if (toogleButton &amp;&amp; toogleButton !== undefined) {
+        toogleButton.addEventListener('click', toogleNavBar);
+    }
+
+    var overlay = document.getElementsByClassName("overlay")[0];
+    if (overlay &amp;&amp; overlay !== undefined) {
+        overlay.addEventListener('click', function() {
+            if (navBarIsOpened())
+                closeNavBar();
+            else
+                toogleSubItem();
+        });
+    }
+
+    getResources();
+
+    /**
+     * Get resources from JSON.
+     */
+    /** @function getResources */
+    function getResources() {
+        ajax_get('./api/nav.json', function(data) {
+            var logo = '&lt;a class="logo">&lt;img src="/images/HUGE-white.png" alt="HUGE"/>&lt;/a>';
+            var navigation = createNavigation(data.items);
+            navbar.insertAdjacentHTML('afterbegin', logo + navigation);
+
+            var items = document.getElementsByClassName('nav-item');
+            for (var count = 0; count &lt; items.length; count++) {
+                if (items.item(count).childNodes.length > 1) {
+                    items.item(count).addEventListener('click', toogleSubItem);
+                }
+            }
+
+            var countLinks = navbar.getElementsByTagName('a');
+            for (count = 0; count &lt; countLinks.length; count++) {
+                if (!countLinks[count].hasChildNodes()) {
+                    countLinks[count].parentElement.removeChild(countLinks[count]);
+                    countLinks[count].parentElement.removeChild(countLinks[count]);
+                }
+            }
+        });
+    }
+
+    /**
+     * Private function to load menu data JSON from a URL.
+     */
+    /** @function ajax_get */
+    function ajax_get(url, callback) {
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState === 4 &amp;&amp; xmlhttp.status === 200) {
+                try {
+                    var data = JSON.parse(xmlhttp.responseText);
+                    callback(data);
+                } catch (err) {
+                    console.log(err.message + " in " + xmlhttp.responseText);
+                    return;
+                }
+            }
+        };
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    }
+
+    /**
+     * Private function to create and populate a Ul list and insert inside a nav.
+     */
+    /** @function createNavigation */
+    function createNavigation(items) {
+        var menu = "";
+        var i = 0;
+        if (items === undefined || items.length === 0) return menu;
+        while (i &lt; items.length) {
+            var item = items[i];
+            var childItems = item &amp;&amp; item.items &amp;&amp; item.items.length;
+            var li = '&lt;li class="nav-item">';
+            if (item !== undefined) {
+                li += '&lt;a ' + (childItems ? '' : 'href="' + item.url + '"') + '>';
+                if (item.label !== "")
+                    li += '&lt;span class="nav-item-text">' + item.label + '&lt;/span>';
+                if (childItems) {
+                    li += '&lt;span class="nav-item-icon">&lt;/span>';
+                    li += createNavigation(item.items);
+                }
+                li += '&lt;/a>';
+            }
+            menu += li;
+            i++;
+        }
+        return '&lt;ul class="nav">' + menu + '&lt;/ul>';
+    }
+
+    /**
+     * Private function to create and populate a Ul list and insert inside a nav.
+     */
+    /** @function createNavigation2 */
+    function createNavigation2(items) {
+        var menu = "";
+        var i = 0;
+        var navMainUl = document.createElement('ul');
+        navMainUl.setAttribute('class', "nav");
+        if (items === undefined || items.length === 0) return menu;
+        while (i &lt; items.length) {
+            var item = items[i];
+            var childItems = item &amp;&amp; item.items &amp;&amp; item.items.length;
+            var navLi = document.createElement('li');
+            navLi.setAttribute('class', "nav-item");
+
+            var navLink = document.createElement('a');
+            var spanText = document.createElement('span');
+            spanText.innerHTML = item.label;
+            spanText.setAttribute('class', "nav-item-text");
+
+            navLink.appendChild(spanText);
+            navLi.appendChild(navLink);
+            if (childItems) {
+                var subNavUl = document.createElement('ul');
+                subNavUl.setAttribute('class', "nav");
+                var spanIcon = document.createElement('span');
+                spanIcon.setAttribute('class', "nav-item-icon");
+                for (var j = 0; j &lt; childItems; j++) {
+                    var subnavLi = document.createElement('li');
+                    subnavLi.setAttribute('class', "nav-item");
+                    var sub_item = item.items[j];
+
+                    var subnavLink = document.createElement('a');
+                    subnavLink.setAttribute('href', sub_item.url);
+                    subnavLink.addEventListener('click', toogleSubItem);
+
+                    spanText = document.createElement('span');
+                    spanText.innerHTML = sub_item.label;
+                    spanText.setAttribute('class', "nav-item-text");
+
+                    subnavLink.appendChild(spanText);
+                    subnavLink.appendChild(spanIcon);
+                    subnavLi.appendChild(subnavLink);
+                    subNavUl.appendChild(subnavLi);
+                }
+                navLi.appendChild(subNavUl);
+            }
+            navMainUl.appendChild(navLi);
+            i++;
+        }
+        return '&lt;ul class="nav">' + getOuterHtml(navMainUl) + '&lt;/ul>';
+    }
+
+    /**
+     * Private function that toogle subitem.
+     */
+    /** @function toogleSubItem  */
+    function toogleSubItem() {
+        var oldItem = document.getElementsByClassName('nav-item open')[0];
+        if (oldItem) {
+            removeClass(oldItem, 'open');
+        }
+        if (this &amp;&amp; oldItem !== this) {
+            this.className += ' open';
+        }
+        if (!navBarIsOpened() &amp;&amp; hasSubItemOpened() &amp;&amp; !overlayIsAppearing()) {
+            showOverlay();
+        }
+        if (!navBarIsOpened() &amp;&amp; !hasSubItemOpened() &amp;&amp; overlayIsAppearing()) {
+            hideOverlay();
+        }
+    }
+
+    /**
+     * Private function that verify if has subitem opened.
+     */
+    /** @function hasSubItemOpened */
+    function hasSubItemOpened() {
+        return document.getElementsByClassName('nav-item open').length;
+    }
+
+    /**
+     * Private function that .
+     */
+    /** @function toogleNavBar */
+    function toogleNavBar() {
+        if (navBarIsOpened()) {
+            closeNavBar();
+        } else {
+            openNavBar();
+        }
+    }
+
+    /**
+     * Private function that open navbar.
+     */
+    /** @function openNavBar */
+    function openNavBar() {
+        if (navBarIsOpened())
+            return;
+
+        showHideOverlay();
+        removeClass(toogleButton, 'open');
+        toogleButton.className += ' close';
+        navbar.className += ' open';
+        logo.className += ' show';
+    }
+
+    /**
+     * Private function that close navbar.
+     */
+    /** @function closeNavBar */
+    function closeNavBar() {
+        if (!navBarIsOpened())
+            return;
+
+        showHideOverlay();
+        removeClass(toogleButton, 'close');
+        toogleButton.className += ' open';
+        removeClass(navbar, 'open');
+        removeClass(logo, 'show');
+    }
+
+    /**
+     * Private function that verify status of navbar.
+     */
+    /** @function navBarIsOpened */
+    function navBarIsOpened() {
+        return navbar.className.indexOf('open') >= 0;
+    }
+
+    /**
+     * Private function that verify overlay.
+     */
+    /** @function overlayIsAppearing */
+    function overlayIsAppearing() {
+        return overlay.className.indexOf('hide') &lt; 0;
+    }
+
+    /**
+     * Private function that show/hide overlay.
+     */
+    /** @function showHideOverlay */
+    function showHideOverlay() {
+        if (overlay.className.indexOf("hide") > 0) {
+            removeClass(overlay, 'hide');
+            document.body.style.overflowY = 'hidden';
+        } else {
+            overlay.className += ' hide';
+            document.body.style.overflowY = 'initial';
+        }
+    }
+
+    /**
+     * Private function that remove class.
+     */
+    /** @function removeClass */
+    function removeClass(element, className) {
+        var classArray = element.className.split(' ');
+        var index = classArray.indexOf(className);
+        classArray.splice(index, 1);
+        element.className = classArray.toString();
+    }
+
+    /**
+     * Private function that gets the outer html.
+     */
+    /** @function getOuterHtml */
+    function getOuterHtml(node) {
+        var parent = node.parentNode;
+        var element = document.createElement(parent.tagName);
+        element.appendChild(node);
+        var html = element.innerHTML;
+        parent.appendChild(node);
+        return html;
+    }
+})();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#ajax_get">ajax_get</a></li><li><a href="global.html#closeNavBar">closeNavBar</a></li><li><a href="global.html#createNavigation">createNavigation</a></li><li><a href="global.html#createNavigation2">createNavigation2</a></li><li><a href="global.html#getOuterHtml">getOuterHtml</a></li><li><a href="global.html#getResources">getResources</a></li><li><a href="global.html#hasSubItemOpened">hasSubItemOpened</a></li><li><a href="global.html#navBarIsOpened">navBarIsOpened</a></li><li><a href="global.html#openNavBar">openNavBar</a></li><li><a href="global.html#overlayIsAppearing">overlayIsAppearing</a></li><li><a href="global.html#removeClass">removeClass</a></li><li><a href="global.html#showHideOverlay">showHideOverlay</a></li><li><a href="global.html#toogleNavBar">toogleNavBar</a></li><li><a href="global.html#toogleSubItem">toogleSubItem</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sat Jun 17 2017 22:29:14 GMT-0300 (Hora oficial do Brasil)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+@media all and (min-width: 768px) {
+    /* Banner */
+    div.main-content div.banner {
+        position: relative;
+    }
+    div.main-content div.banner img {
+        height: 640px;
+        width: 100%;
+    }
+    /* Title */
+    div.main-content div.title {
+        position: absolute;
+        margin: 0px auto;
+        top: 30%;
+        left: 18%;
+    }
+    div.main-content div.title h1 {
+        font: 120px/132px HUGEAvantGardeBold;
+        color: white;
+    }
+    /* Content Text */
+    div.main-content div.content-text {
+        padding: 0px;
+        max-width: 968px;
+        margin: 60px auto 0px auto;
+        font: 24px/36px Galaxie;
+        text-align: justify;
+    }
+    div.main-content div.content-text p {
+        margin: 0px;
+    }
+}

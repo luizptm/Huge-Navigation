@@ -1,0 +1,113 @@
+/* NavBar */
+
+div.nav-bar {
+    position: absolute;
+    width: calc(100% - 72px);
+    background-color: white;
+    left: -100%;
+    z-index: 3;
+    transition: left 0.3s ease-out;
+    overflow-y: scroll;
+    height: calc(100% - 60px);
+}
+
+div.nav-bar a.logo {
+    display: none;
+}
+
+div.nav-bar.open {
+    left: 0px;
+}
+
+div.nav-bar ul.nav,
+div.nav-bar ul.nav ul.nav {
+    padding: 12px 0px;
+    margin: 0px;
+}
+
+
+/* Copyrigth */
+
+div.nav-bar p.copyright {
+    position: relative;
+    bottom: 0px;
+    height: 48px;
+    margin: 0px;
+    padding-left: 24px;
+}
+
+
+/* Item */
+
+li.nav-item {
+    cursor: pointer;
+}
+
+
+/* Item Anchor */
+
+ul.nav a {
+    text-decoration: none;
+    display: block;
+}
+
+ul.nav a:hover {
+    background-color: #eee;
+}
+
+
+/* Item Text */
+
+ul.nav span.nav-item-text {
+    height: 48px;
+    padding-left: 24px;
+    font: 21px/48px HUGEAvantGardeBold;
+    color: black;
+    margin: 0px;
+    cursor: pointer;
+}
+
+
+/* Item Icon */
+
+ul.nav span.nav-item-icon {
+    float: right;
+    font-size: 2rem;
+    transition: transform 0.2s linear;
+}
+
+ul.nav span.nav-item-icon:after {
+    float: right;
+    width: 48px;
+    height: 48px;
+    content: ' ';
+    background: url(/images/chevron-arrow.svg) no-repeat center center;
+}
+
+ul.nav li.nav-item.open span.nav-item-icon {
+    transform: rotate(180deg);
+}
+
+
+/* SubItem */
+
+ul.nav ul.nav {
+    height: 0px;
+    display: none;
+}
+
+ul.nav ul.nav span.nav-item-text {
+    font: 16px/48px Galaxie;
+    color: black;
+    margin: 0px;
+    cursor: pointer;
+}
+
+ul.nav ul.nav a:hover span.nav-item-text {
+    color: #ec008c;
+}
+
+ul.nav li.nav-item.open ul.nav {
+    height: auto;
+    display: block;
+}
